@@ -8,10 +8,32 @@ export const HomeForm = () => {
       <S.FormContainer action="">
         <S.ContentForm>
           <label htmlFor="task">Vou Trabalhar em:</label>
-          <input type="text" id="task" />
+          <S.InputTask
+            type="text"
+            id="task"
+            list="options-tasks"
+            placeholder="Dê um nome para o seu projeto"
+          />
+
+          <datalist id="options-tasks">
+            <option value="React">React</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="Typescript">Typescript</option>
+            <option value="Node">Node</option>
+            <option value="Testes Unitários">Testes Unitários</option>
+            <option value="Redux">Redux</option>
+            <option value="Context Api">Context Api</option>
+            <option value="Inglês">Inglês</option>
+          </datalist>
 
           <label htmlFor="minutesOfDuration">Durante:</label>
-          <input type="number" id="minutesOfDuration" />
+          <S.InputMinutesOfDuration
+            type="number"
+            id="minutesOfDuration"
+            step={5}
+            min={5}
+            max={60}
+          />
 
           <span>minutos</span>
         </S.ContentForm>
@@ -24,10 +46,10 @@ export const HomeForm = () => {
           <span>0</span>
         </S.CountDownContainer>
 
-        <button type="submit">
+        <S.ButtonStartCountdown type="submit">
           <Play size={24} />
           Iniciar
-        </button>
+        </S.ButtonStartCountdown>
       </S.FormContainer>
     </S.ContainerMain>
   )
