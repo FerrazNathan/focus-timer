@@ -22,10 +22,10 @@ export const ContainerHeader = styled.header`
       & :hover {
         border-bottom: 3px solid ${(props) => props.theme.colors.green500};
       }
+    }
 
-      & :active {
-        color: ${(props) => props.theme.colors.green500};
-      }
+    .active {
+      color: ${(props) => props.theme.colors.green500};
     }
   }
 `
