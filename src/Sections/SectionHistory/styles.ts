@@ -1,5 +1,15 @@
 import styled from 'styled-components'
 
+const STATUS_COLORS = {
+  inProgress: 'yellow500',
+  completed: 'green500',
+  canceled: 'red500',
+} as const
+
+interface StatusProps {
+  statusColor: keyof typeof STATUS_COLORS
+}
+
 export const ContainerHistory = styled.main`
   flex: 1;
   padding: 3.5rem;
@@ -57,5 +67,20 @@ export const ListHistory = styled.div`
         padding-right: 1.5rem;
       }
     }
+  }
+`
+
+export const StatusDot = styled.span<StatusProps>`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  &::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: ${(props) =>
+      props.theme.colors[STATUS_COLORS[props.statusColor]]};
   }
 `

@@ -19,25 +19,41 @@ export const SectionHistory = () => {
               <td>React</td>
               <td>20 minutos</td>
               <td>há 2 anos</td>
-              <td>Concluído</td>
+              <td>
+                <S.StatusDot statusColor="completed">Concluído</S.StatusDot>
+              </td>
             </tr>
             <tr>
               <td>JavaScript</td>
               <td>45 minutos</td>
               <td>há 2 meses</td>
-              <td>Em Andamento</td>
+              <td>
+                <S.StatusDot statusColor="inProgress">Em Andamento</S.StatusDot>
+              </td>
             </tr>
             <tr>
               <td>React</td>
               <td>20 minutos</td>
               <td>há 2 anos</td>
-              <td>Concluído</td>
+              <td>
+                <S.StatusDot statusColor="completed">Concluído</S.StatusDot>
+              </td>
             </tr>
             <tr>
               <td>JavaScript</td>
               <td>45 minutos</td>
               <td>há 2 meses</td>
-              <td>Em Andamento</td>
+              <td>
+                <S.StatusDot statusColor="inProgress">Em Andamento</S.StatusDot>
+              </td>
+            </tr>
+            <tr>
+              <td>JavaScript</td>
+              <td>45 minutos</td>
+              <td>há 2 meses</td>
+              <td>
+                <S.StatusDot statusColor="canceled">Cancelado</S.StatusDot>
+              </td>
             </tr>
           </tbody>
         </table>
