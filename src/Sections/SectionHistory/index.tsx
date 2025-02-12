@@ -1,9 +1,19 @@
+import { useContext } from 'react'
+import { NewCyclesContext } from '../../context/NewCyclesContext'
+
 import * as S from './styles'
 
 export const SectionHistory = () => {
+  const { cycles } = useContext(NewCyclesContext)
+
+  console.log(cycles, 'cycles in section history')
+
   return (
     <S.ContainerHistory>
       <h2>Meu Histórico</h2>
+
+      <pre>{JSON.stringify(cycles, null, 2)}</pre>
+
       <S.ListHistory>
         <table>
           <thead>
