@@ -63,7 +63,6 @@ export const NewCyclesContextProvider = ({
 
     setCycles((state) => [...state, newCicle]) // Copia o estado atual de ciclos, e adiciona mais um ciclo ao estado
     setactiveCycleId(newCicle.id) // Seleciona o novo ciclo como ativo
-    // reset() // Reseta o formulário
     setMinutesOfDurationPassed(0) // Reseta o tempo passado
   }
 

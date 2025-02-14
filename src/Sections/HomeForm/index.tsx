@@ -42,12 +42,17 @@ export const HomeForm = () => {
     reset, // Função reset = Reseta o formulário, limpando os valores dos inputs.
   } = newCycleForm // Desestruturação do newCycleForm para usar apenas as funções que serão usadas aqui.
 
+  const handleCreateNewCycle = (data: NewCicleFormData) => {
+    createNewCicle(data)
+    reset() // Reseta o formulário após a criação do novo ciclo
+  }
+
   const task = watch('task') // monitora o input de task
   const isDisabledSubmit = !task // desabilita o envio do formulário caso o input de task não esteja preenchido
 
   return (
     <S.ContainerMain>
-      <S.FormContainer action="" onSubmit={handleSubmit(createNewCicle)}>
+      <S.FormContainer action="" onSubmit={handleSubmit(handleCreateNewCycle)}>
         <FormProvider {...newCycleForm}>
           <NewCycleForm />
         </FormProvider>
