@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { NewCyclesContext } from '../../context/NewCyclesContext'
+import { NewCyclesContext } from '../../contexts/NewCyclesContext'
 
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
@@ -8,8 +8,6 @@ import * as S from './styles'
 
 export const SectionHistory = () => {
   const { cycles } = useContext(NewCyclesContext)
-
-  console.log(cycles, 'cycles in section history')
 
   return (
     <S.ContainerHistory>
@@ -32,7 +30,7 @@ export const SectionHistory = () => {
                   <td>{cycle.task}</td>
                   <td>{cycle.minutesOfDuration} minutos</td>
                   <td>
-                    {formatDistanceToNow(cycle.startDate, {
+                    {formatDistanceToNow(new Date(cycle.startDate), {
                       // Formata a data como a distancia de agora
                       addSuffix: true, // Adiciona um prefixo do tipo há (tempo de distância)
                       locale: ptBR, // Traduz para o português do Brasil

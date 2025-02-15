@@ -1,6 +1,19 @@
-import { createContext, useState, ReactNode } from 'react'
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useReducer,
+  useEffect,
+} from 'react'
 
 import { FormatCycle } from '../Sections/HomeForm/HomeForm.types'
+import { cyclesReducer, CyclesState } from '../reducers/cycles/cycles'
+import {
+  createNewCycleAction,
+  interruptCurrentCycleAction,
+  markCurrentCycleAsFinishedAction,
+} from '../reducers/cycles/actions'
+import { differenceInSeconds } from 'date-fns'
 
 interface CreateCicleFormData {
   task: string
@@ -15,7 +28,7 @@ interface NewCyclesContextProps {
 
   markCurrenctCycleAsFinished: () => void
   setSecondsPassed: (seconds: number) => void
-  createNewCicle: (data: CreateCicleFormData) => void
+  createnewCycle: (data: CreateCicleFormData) => void
   interruptCurrentCycle: () => void
 }
 
@@ -28,59 +41,66 @@ export const NewCyclesContext = createContext({} as NewCyclesContextProps)
 export const NewCyclesContextProvider = ({
   children,
 }: NewCyclesContextProviderProps) => {
-  const [cycles, setCycles] = useState<FormatCycle[]>([])
-  const [activeCycleId, setactiveCycleId] = useState<string | null>(null)
-  const [minutesOfDurationPassed, setMinutesOfDurationPassed] = useState(0)
+  const [cyclesState, dispatch] = useReducer(
+    cyclesReducer,
+    {
+      cycles: [],
+      activeCycleId: null,
+    },
+    (initialState) => {
+      const storageStateJSON = localStorage.getItem('newCyclesState')
 
+      if (storageStateJSON) {
+        const savedState: CyclesState = JSON.parse(storageStateJSON)
+
+        return savedState
+      }
+
+      return initialState
+    },
+  )
+
+  const { cycles, activeCycleId } = cyclesState
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId) // Encontra o ciclo ativo
 
+  const [minutesOfDurationPassed, setMinutesOfDurationPassed] = useState(() => {
+    if (activeCycle) {
+      return differenceInSeconds(new Date(), new Date(activeCycle.startDate))
+    }
+
+    return 0
+  })
+
   const markCurrenctCycleAsFinished = () => {
-    setCycles((state) =>
-      state.map((cycle) => {
-        if (cycle.id === activeCycleId) {
-          return {
-            ...cycle,
-            endDate: new Date(),
-          }
-        } else {
-          return cycle
-        }
-      }),
-    )
+    dispatch(markCurrentCycleAsFinishedAction())
   }
 
   const setSecondsPassed = (seconds: number) => {
     setMinutesOfDurationPassed(seconds)
   }
 
-  const createNewCicle = (data: CreateCicleFormData) => {
-    const newCicle: FormatCycle = {
+  const createnewCycle = (data: CreateCicleFormData) => {
+    const newCycle: FormatCycle = {
       task: data.task,
       minutesOfDuration: data.minutesOfDuration,
       id: String(new Date().getTime()), // ID = Timestamp da data atual
       startDate: new Date(), // Data de início do ciclo
     }
 
-    setCycles((state) => [...state, newCicle]) // Copia o estado atual de ciclos, e adiciona mais um ciclo ao estado
-    setactiveCycleId(newCicle.id) // Seleciona o novo ciclo como ativo
+    dispatch(createNewCycleAction(newCycle))
+
     setMinutesOfDurationPassed(0) // Reseta o tempo passado
   }
 
   const interruptCurrentCycle = () => {
-    setCycles((state) =>
-      state.map((cycle) => {
-        if (cycle.id === activeCycleId) {
-          return {
-            ...cycle,
-            interruptedDate: new Date(),
-          }
-        } else {
-          return cycle
-        }
-      }),
-    )
-    setactiveCycleId(null) // Remove o ciclo ativo
+    dispatch(interruptCurrentCycleAction())
   }
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(cyclesState)
+
+    localStorage.setItem('newCyclesState', stateJSON) // Salva o estado do contexto em localStorage
+  }, [cyclesState])
 
   return (
     <NewCyclesContext.Provider
@@ -90,7 +110,7 @@ export const NewCyclesContextProvider = ({
         markCurrenctCycleAsFinished,
         minutesOfDurationPassed,
         setSecondsPassed,
-        createNewCicle,
+        createnewCycle,
         interruptCurrentCycle,
         cycles,
       }}

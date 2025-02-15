@@ -7,15 +7,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CountDown } from './components/CountDown'
 import { NewCycleForm } from './components/NewCycleForm'
 
-import { NewCyclesContext } from '../../context/NewCyclesContext'
+import { NewCyclesContext } from '../../contexts/NewCyclesContext'
 
 import * as S from './styles'
 
 export const HomeForm = () => {
-  const { createNewCicle, interruptCurrentCycle, activeCycle } =
+  const { createnewCycle, interruptCurrentCycle, activeCycle } =
     useContext(NewCyclesContext)
   // Definição do esquema de validação do formulário
-  const newCicleFormValidationSchema = zod.object({
+  const newCycleFormValidationSchema = zod.object({
     task: zod.string().nonempty('Campo obrigatório').min(1, 'Informe a Tarefa'),
     minutesOfDuration: zod
       .number()
@@ -24,11 +24,11 @@ export const HomeForm = () => {
       .max(60, 'O tempo Máximo é de 60 minutos'),
   })
 
-  type NewCicleFormData = zod.infer<typeof newCicleFormValidationSchema> // TIPAGEM INFERIDA A PARTIR DO SCHEMA DE VALIDAÇÃO DO ZOD
+  type newCycleFormData = zod.infer<typeof newCycleFormValidationSchema> // TIPAGEM INFERIDA A PARTIR DO SCHEMA DE VALIDAÇÃO DO ZOD
 
-  const newCycleForm = useForm<NewCicleFormData>({
+  const newCycleForm = useForm<newCycleFormData>({
     // Criação de um newCycleForm sem a desestruturação para enviar funções para outros componentes.
-    resolver: zodResolver(newCicleFormValidationSchema), // Resolver = Validação do formulário
+    resolver: zodResolver(newCycleFormValidationSchema), // Resolver = Validação do formulário
     defaultValues: {
       minutesOfDuration: 0,
       task: '',
@@ -42,8 +42,8 @@ export const HomeForm = () => {
     reset, // Função reset = Reseta o formulário, limpando os valores dos inputs.
   } = newCycleForm // Desestruturação do newCycleForm para usar apenas as funções que serão usadas aqui.
 
-  const handleCreateNewCycle = (data: NewCicleFormData) => {
-    createNewCicle(data)
+  const handleCreateNewCycle = (data: newCycleFormData) => {
+    createnewCycle(data)
     reset() // Reseta o formulário após a criação do novo ciclo
   }
 

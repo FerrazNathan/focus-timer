@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { NewCyclesContext } from '../../../../context/NewCyclesContext'
+import { NewCyclesContext } from '../../../../contexts/NewCyclesContext'
 
 import { useFormContext } from 'react-hook-form'
 import * as S from './styles'
