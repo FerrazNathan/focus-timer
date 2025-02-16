@@ -1,4 +1,4 @@
-# ignite-timer
+# focus-timer
 
 Um aplicativo de gerenciamento de tarefas com contador regressivo, desenvolvido com React e TypeScript. O usuário pode definir uma tarefa e um tempo para executá-la, acompanhar a contagem regressiva e visualizar o histórico de atividades.
 
@@ -42,8 +42,8 @@ Um aplicativo de gerenciamento de tarefas com contador regressivo, desenvolvido 
 1. **Clone o repositório:**
 
    ```bash
-   https://github.com/FerrazNathan/ignite-timer.git
-   cd ignite-timer
+   https://github.com/FerrazNathan/focus-timer.git
+   cd focus-timer
 
 2. **Instalação das dependências**
    ```bash
